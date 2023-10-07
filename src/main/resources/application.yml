@@ -1,0 +1,10 @@
+telegram:
+  bot-token: 6512823955:AAH-8sMdyMtQM7PoC6a5lCl2nXmGNtCbxgk
+  bot-name: Finansist
+
+google:
+  sheets:
+    app-name: Finansist
+
+server:
+  port: 8080
