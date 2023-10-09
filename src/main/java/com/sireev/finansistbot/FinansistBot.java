@@ -1,6 +1,5 @@
 package com.sireev.finansistbot;
 
-import com.sireev.finansistbot.configuration.BotConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -17,8 +16,7 @@ public class FinansistBot extends TelegramLongPollingBot {
     @Value("${telegram.bot-name}")
     private String botName;
 
-    public FinansistBot(@Value("${telegram.bot-token}") String botToken,
-                        BotConfig botConfig) {
+    public FinansistBot(@Value("${telegram.bot-token}") String botToken) {
         super(botToken);
     }
     @Override
