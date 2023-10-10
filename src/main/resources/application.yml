@@ -5,6 +5,7 @@ telegram:
 google:
   sheets:
     app-name:
+    spreadsheetId:
 
 server:
   port: 8080
