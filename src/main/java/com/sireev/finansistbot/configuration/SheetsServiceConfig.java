@@ -1,8 +1,9 @@
 package com.sireev.finansistbot.configuration;
 
-import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,16 +16,17 @@ import java.security.GeneralSecurityException;
 @RequiredArgsConstructor
 public class SheetsServiceConfig {
 
-    private final Credential credential;
-    private final JsonFactory jsonFactory;
-    private final GoogleAuthorizationConfig googleAuthorizationConfig;
+    private final GoogleAuthorizationManager authorizationManager;
+    private final GoogleAuthorizationManager googleAuthorizationManager;
 
     @Bean
     public Sheets sheets() throws IOException, GeneralSecurityException {
+        NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         return new Sheets.Builder(
-                GoogleNetHttpTransport.newTrustedTransport(),
-                jsonFactory, credential)
-                .setApplicationName(googleAuthorizationConfig.getAppName())
+                httpTransport,
+                GsonFactory.getDefaultInstance(),
+                authorizationManager.getCredentials(httpTransport))
+                .setApplicationName(googleAuthorizationManager.getAppName())
                 .build();
     }
 

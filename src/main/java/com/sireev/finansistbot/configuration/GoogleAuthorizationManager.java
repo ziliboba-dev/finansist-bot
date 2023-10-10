@@ -12,7 +12,6 @@ import com.google.api.services.sheets.v4.SheetsScopes;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.FileNotFoundException;
@@ -25,10 +24,10 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 @Getter
-public class GoogleAuthorizationConfig {
+public class GoogleAuthorizationManager {
 
     private static final List<String> SCOPES =
-            Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
+            Collections.singletonList(SheetsScopes.SPREADSHEETS);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
@@ -44,11 +43,10 @@ public class GoogleAuthorizationConfig {
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
      */
-    @Bean
-    public Credential credentials(final NetHttpTransport HTTP_TRANSPORT)
+    public Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
             throws IOException {
         // Load client secrets.
-        InputStream in = GoogleAuthorizationConfig.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = GoogleAuthorizationManager.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
